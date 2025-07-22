@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+  body {
+    @apply font-sans m-5 p-0;
+  }
+}
