@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "react-router-dom";
 import { Bars3Icon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
 export default function Header() {
@@ -10,7 +11,7 @@ export default function Header() {
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             Placeholder Logo
           </a>
@@ -25,12 +26,12 @@ export default function Header() {
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
+          <Link to="/" className="text-sm/6 font-semibold text-gray-900">
             Dashboard
-          </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
+          </Link>
+          <Link to="/income" className="text-sm/6 font-semibold text-gray-900">
             Income
-          </a>
+          </Link>
           <a href="#" className="text-sm/6 font-semibold text-gray-900">
             Expenses
           </a>
