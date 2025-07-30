@@ -6,8 +6,6 @@ describe("useIncomeAccounts", () => {
   beforeEach(() => {
     vi.stubEnv("DEV", false);
     global.fetch = vi.fn();
-    // setDevEnv(true);
-    // delete window.fetch;
   });
 
   afterEach(() => {

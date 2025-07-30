@@ -1,6 +1,6 @@
-import { renderHook, act, waitFor } from "@testing-library/react";
+import { renderHook, act } from "@testing-library/react";
 import { toast } from "react-hot-toast";
-import { vi, type Mock } from "vitest";
+import { vi } from "vitest";
 import { useAddIncomeForm } from "./useAddIncomeForm";
 
 describe("useAddIncomeForm", () => {

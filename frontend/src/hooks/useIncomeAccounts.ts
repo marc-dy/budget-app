@@ -10,7 +10,6 @@ export function useIncomeAccounts() {
   useEffect(() => {
     /* istanbul ignore if */
     if (import.meta.env.DEV) {
-      console.log("running in dev mode");
       // Mocking fetch for development purposes
       window.fetch = async (url: string): Promise<Response> => {
         if (url === "/api/accounts") {
@@ -30,7 +29,6 @@ export function useIncomeAccounts() {
       // TODO: consider adding logic for loading when categories and accounts are being fetched
       try {
         const res = await fetch("/api/accounts");
-        console.log(res.ok);
         if (!res.ok) throw new Error("Failed to fetch accounts");
         const accountsData = await res.json();
         setAccounts(accountsData.map((acc: Account) => acc));
