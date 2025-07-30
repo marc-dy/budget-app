@@ -90,7 +90,6 @@ export function useAddIncomeForm({ onClose }: { onClose: () => void }) {
     >
   ) => {
     const { name, value } = e.target;
-    console.log("handleChange", name, value);
     setIncomeFormValues((prev) => ({
       ...prev,
       [name]: value,

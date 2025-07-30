@@ -26,7 +26,7 @@ const FormInput = ({
         className={`w-full border p-2 rounded ${
           errorMsg ? "border-red-500 mb-1" : "mb-2"
         }`}
-        value={value ?? ""}
+        value={value}
         onChange={onChange}
       />
       {errorMsg && <p className="text-red-500 text-sm mb-1">{errorMsg}</p>}
