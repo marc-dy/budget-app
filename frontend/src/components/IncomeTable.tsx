@@ -1,7 +1,11 @@
 import type { IncomeData } from "../types/IncomeData";
+
 function populateTableData(incomeList: Array<IncomeData>) {
   return incomeList.map((income) => (
-    <tr key={income.id} className="hover:bg-gray-100">
+    <tr
+      key={income.id}
+      className="hover:bg-gray-100 odd:bg-white even:bg-gray-200"
+    >
       <td className="px-4 py-2 border text-center">{income.receivedFrom}</td>
       <td className="px-4 py-2 border text-center">{income.amount}</td>
       <td className="px-4 py-2 border text-center">{income.account}</td>
@@ -12,14 +16,10 @@ function populateTableData(incomeList: Array<IncomeData>) {
   ));
 }
 
-export default function IncomeTable({
-  incomeList,
-}: {
-  incomeList: IncomeData[];
-}) {
+const IncomeTable = ({ incomeList }: { incomeList: IncomeData[] }) => {
   return (
     <table className="table-auto w-full border border-gray-300">
-      <thead className="bg-gray-200">
+      <thead className="bg-gray-700 text-white">
         <tr>
           <th className="px-4 py-1 border">Received From</th>
           <th className="px-4 py-1 border">Amount</th>
@@ -32,4 +32,6 @@ export default function IncomeTable({
       <tbody>{populateTableData(incomeList)}</tbody>
     </table>
   );
-}
+};
+
+export default IncomeTable;
