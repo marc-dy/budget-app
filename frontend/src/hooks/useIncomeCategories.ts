@@ -12,7 +12,7 @@ export function useIncomeCategories() {
   useEffect(() => {
     if (import.meta.env.DEV) {
       // Mocking fetch for development purposes
-      window.fetch = async (url: string): Promise<Response> => {
+      window.fetch = async (url: URL | RequestInfo): Promise<Response> => {
         if (url === "/api/categories") {
           return {
             ok: true,

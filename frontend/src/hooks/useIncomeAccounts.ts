@@ -11,7 +11,7 @@ export function useIncomeAccounts() {
     /* istanbul ignore if */
     if (import.meta.env.DEV) {
       // Mocking fetch for development purposes
-      window.fetch = async (url: string): Promise<Response> => {
+      window.fetch = async (url: URL | RequestInfo): Promise<Response> => {
         if (url === "/api/accounts") {
           return {
             ok: true,

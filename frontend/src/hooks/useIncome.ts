@@ -7,7 +7,7 @@ export function useIncome() {
     if (import.meta.env.DEV) {
       console.log("Development mode: Income component loaded");
       // Mocking fetch for development purposes
-      window.fetch = async (url: string): Promise<Response> => {
+      window.fetch = async (url: URL | RequestInfo): Promise<Response> => {
         if (url === "/api/income") {
           return {
             ok: true,

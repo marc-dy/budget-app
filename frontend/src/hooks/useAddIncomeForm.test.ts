@@ -309,7 +309,7 @@ describe("useAddIncomeForm", () => {
     const mockFetch = vi.fn().mockResolvedValueOnce({
       ok: false,
     });
-    vi.spyOn(toast, "error").mockImplementation(() => {});
+    vi.spyOn(toast, "error").mockImplementation(vi.fn());
     global.fetch = mockFetch;
     await act(async () => {
       await result.current.handleSubmit({
