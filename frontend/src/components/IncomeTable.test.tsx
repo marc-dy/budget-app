@@ -4,7 +4,7 @@ import "@testing-library/jest-dom"; // <-- Add this import for toBeInTheDocument
 
 describe("IncomeTable", () => {
   it("renders table headers", () => {
-    render(<IncomeTable incomeList={[]} />);
+    render(<IncomeTable incomes={[]} />);
     expect(screen.getByText("Received From")).toBeInTheDocument();
     expect(screen.getByText("Amount")).toBeInTheDocument();
     expect(screen.getByText("Account")).toBeInTheDocument();
@@ -14,13 +14,19 @@ describe("IncomeTable", () => {
   });
 
   it("renders income data rows", () => {
-    const incomeList = [
+    const incomes = [
       {
         id: 1,
         receivedFrom: "Company A",
         amount: 1000,
-        account: "Bank Account",
-        category: "Salary",
+        account: {
+          id: 2,
+          name: "Bank Account",
+        },
+        category: {
+          id: 4,
+          name: "Salary",
+        },
         date: "2023-10-01",
         comments: "Monthly salary",
       },
@@ -28,14 +34,20 @@ describe("IncomeTable", () => {
         id: 2,
         receivedFrom: "Freelance Project",
         amount: 500,
-        account: "PayPal",
-        category: "Freelance",
+        account: {
+          id: 3,
+          name: "PayPal",
+        },
+        category: {
+          id: 5,
+          name: "Freelance",
+        },
         date: "2023-10-05",
         comments: "Payment for project work",
       },
     ];
 
-    render(<IncomeTable incomeList={incomeList} />);
+    render(<IncomeTable incomes={incomes} />);
     expect(screen.getByText("Company A")).toBeInTheDocument();
     expect(screen.getByText("1000")).toBeInTheDocument();
     expect(screen.getByText("Bank Account")).toBeInTheDocument();

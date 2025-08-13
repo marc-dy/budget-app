@@ -90,8 +90,6 @@ const AddIncomeModal = ({ isOpen, onClose }: AddIncomeModalProps) => {
                 onChange={(e) => {
                   if (e.target.checked) {
                     // TODO: Logic to keep the modal open for adding another income
-                  } else {
-                    onClose();
                   }
                 }}
               />

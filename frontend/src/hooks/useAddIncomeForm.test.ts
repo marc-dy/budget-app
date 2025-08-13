@@ -266,7 +266,7 @@ describe("useAddIncomeForm", () => {
     expect(result.current.errors.account).not.toBeDefined();
     expect(result.current.errors.date).not.toBeDefined();
     expect(mockFetch).toHaveBeenCalledWith(
-      "/api/income",
+      "/api/incomes",
       expect.objectContaining({ method: "POST" })
     );
   });
@@ -322,7 +322,7 @@ describe("useAddIncomeForm", () => {
     expect(result.current.errors.account).not.toBeDefined();
     expect(result.current.errors.date).not.toBeDefined();
     expect(mockFetch).toHaveBeenCalledWith(
-      "/api/income",
+      "/api/incomes",
       expect.objectContaining({ method: "POST" })
     );
     expect(toast.error).toHaveBeenCalledWith(expect.stringContaining("Failed"));
