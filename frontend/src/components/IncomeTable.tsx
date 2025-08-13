@@ -1,22 +1,22 @@
 import type { IncomeData } from "../types/IncomeData";
 
-function populateTableData(incomeList: Array<IncomeData>) {
-  return incomeList.map((income) => (
+function populateTableData(incomes: Array<IncomeData>) {
+  return incomes.map((income) => (
     <tr
       key={income.id}
       className="hover:bg-gray-100 odd:bg-white even:bg-gray-200"
     >
       <td className="px-4 py-2 border text-center">{income.receivedFrom}</td>
       <td className="px-4 py-2 border text-center">{income.amount}</td>
-      <td className="px-4 py-2 border text-center">{income.account}</td>
-      <td className="px-4 py-2 border text-center">{income.category}</td>
+      <td className="px-4 py-2 border text-center">{income.account.name}</td>
+      <td className="px-4 py-2 border text-center">{income.category.name}</td>
       <td className="px-4 py-2 border text-center">{income.date}</td>
       <td className="px-4 py-2 border text-center">{income.comments}</td>
     </tr>
   ));
 }
 
-const IncomeTable = ({ incomeList }: { incomeList: IncomeData[] }) => {
+const IncomeTable = ({ incomes }: { incomes: IncomeData[] }) => {
   return (
     <table className="table-auto w-full border border-gray-300">
       <thead className="bg-gray-700 text-white">
@@ -29,7 +29,7 @@ const IncomeTable = ({ incomeList }: { incomeList: IncomeData[] }) => {
           <th className="px-4 py-1 border">Comments</th>
         </tr>
       </thead>
-      <tbody>{populateTableData(incomeList)}</tbody>
+      <tbody>{populateTableData(incomes)}</tbody>
     </table>
   );
 };

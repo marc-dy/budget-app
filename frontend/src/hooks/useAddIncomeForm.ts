@@ -49,8 +49,8 @@ export function useAddIncomeForm({ onClose }: { onClose: () => void }) {
     const incomeData = {
       receivedFrom: incomeFormValues.receivedFrom,
       amount: Number(incomeFormValues.amount),
-      account: Number(incomeFormValues.account),
-      category: Number(incomeFormValues.category),
+      accountId: Number(incomeFormValues.account),
+      categoryId: Number(incomeFormValues.category),
       date: new Date(incomeFormValues.date).toISOString(),
       comments: incomeFormValues.comment,
     };
@@ -62,7 +62,7 @@ export function useAddIncomeForm({ onClose }: { onClose: () => void }) {
       return;
     }
     try {
-      const response = await fetch("/api/income", {
+      const response = await fetch("/api/incomes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,7 +75,8 @@ export function useAddIncomeForm({ onClose }: { onClose: () => void }) {
         throw new Error("Failed to save income");
       }
 
-      // Optionally, you can reset the form or close the modal after saving
+      // TODO: Optionally, you can reset the form or close the modal
+      // If checkbox is checked in modal, do not close and just clear the form.
       onClose();
     } catch (error) {
       console.error("Error saving income:", error);

@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { vi, type Mock } from "vitest";
-import { useIncome } from "./useIncome";
+import { useIncomes } from "./useIncomes";
 
-describe("useIncome", () => {
+describe("useIncomes", () => {
   beforeEach(() => {
     vi.stubEnv("DEV", false);
     global.fetch = vi.fn();
@@ -19,8 +19,14 @@ describe("useIncome", () => {
         id: 1,
         receivedFrom: "Client A",
         amount: 1000,
-        account: "Bank A",
-        category: "Salary",
+        account: {
+          id: 2,
+          name: "Bank A",
+        },
+        category: {
+          id: 4,
+          name: "Salary",
+        },
         date: "2023-10-01",
         comments: "Monthly salary",
       },
@@ -28,8 +34,14 @@ describe("useIncome", () => {
         id: 2,
         receivedFrom: "Client B",
         amount: 500,
-        account: "Bank B",
-        category: "Freelance",
+        account: {
+          id: 3,
+          name: "Bank B",
+        },
+        category: {
+          id: 5,
+          name: "Freelance",
+        },
         date: "2023-10-05",
         comments: "Freelance work",
       },
@@ -40,7 +52,7 @@ describe("useIncome", () => {
       status: 200,
       json: async () => mockIncome,
     });
-    const { result } = renderHook(() => useIncome());
+    const { result } = renderHook(() => useIncomes());
     await waitFor(() => {
       expect(result.current.length).toEqual(2);
     });
@@ -54,7 +66,7 @@ describe("useIncome", () => {
       statusText: "Not Found",
       json: async () => ({ message: "Not Found" }),
     });
-    const { result } = renderHook(() => useIncome());
+    const { result } = renderHook(() => useIncomes());
     await waitFor(() => {
       expect(result.current.length).toEqual(0);
     });

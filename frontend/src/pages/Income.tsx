@@ -1,9 +1,9 @@
 import IncomeTable from "../components/IncomeTable";
 import AddIncomeButton from "../components/AddIncomeButton";
-import { useIncome } from "../hooks/useIncome";
+import { useIncomes } from "../hooks/useIncomes";
 
 export default function Income() {
-  const incomeList = useIncome();
+  const incomes = useIncomes();
 
   return (
     <div className="p-6">
@@ -14,7 +14,7 @@ export default function Income() {
         </div>
       </div>
 
-      <IncomeTable incomeList={incomeList} />
+      <IncomeTable incomes={incomes} />
     </div>
   );
 }

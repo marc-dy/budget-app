@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import type { IncomeData } from "../types/IncomeData";
 
-export function useIncome() {
-  const [incomeList, setIncomeList] = useState<IncomeData[]>([]);
+export function useIncomes() {
+  const [incomes, setIncomes] = useState<IncomeData[]>([]);
   useEffect(() => {
     if (import.meta.env.DEV) {
       console.log("Development mode: Income component loaded");
       // Mocking fetch for development purposes
       window.fetch = async (url: URL | RequestInfo): Promise<Response> => {
-        if (url === "/api/income") {
+        if (url === "/api/incomes") {
           return {
             ok: true,
             json: async () => [
@@ -16,8 +16,14 @@ export function useIncome() {
                 id: 1,
                 receivedFrom: "Client A",
                 amount: 1000,
-                account: "Bank A",
-                category: "Salary",
+                account: {
+                  id: 2,
+                  name: "Bank A",
+                },
+                category: {
+                  id: 4,
+                  name: "Salary",
+                },
                 date: "2023-10-01",
                 comments: "Monthly salary",
               },
@@ -25,8 +31,14 @@ export function useIncome() {
                 id: 2,
                 receivedFrom: "Client B",
                 amount: 500,
-                account: "Bank B",
-                category: "Freelance",
+                account: {
+                  id: 3,
+                  name: "Bank B",
+                },
+                category: {
+                  id: 5,
+                  name: "Freelance",
+                },
                 date: "2023-10-05",
                 comments: "Freelance work",
               },
@@ -40,20 +52,20 @@ export function useIncome() {
     // For now, we will use a placeholder
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/income");
+        const response = await fetch("/api/incomes");
         if (!response.ok) {
           throw new Error("Failed to fetch income data");
         }
         const data: IncomeData[] = await response.json();
-        setIncomeList(data);
+        setIncomes(data);
       } catch {
         console.error("Error fetching income data");
         // Handle error appropriately, e.g., show a notification or set an error state
-        setIncomeList([]); // Clear the list on error
+        setIncomes([]); // Clear the list on error
       }
     };
 
     fetchData();
   }, []);
-  return incomeList;
+  return incomes;
 }
