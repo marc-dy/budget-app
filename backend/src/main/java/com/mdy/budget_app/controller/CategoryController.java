@@ -1,10 +1,11 @@
 package com.mdy.budget_app.controller;
 
-import java.util.List;
+import com.mdy.budget_app.entity.Category;
+import com.mdy.budget_app.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.mdy.budget_app.service.CategoryService;
-import com.mdy.budget_app.entity.Category;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")

@@ -1,9 +1,13 @@
 package com.mdy.budget_app.entity;
-import lombok.*;
+
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class Category {
     @Id

@@ -16,8 +16,12 @@ public class AccountService {
         return repo.findAll();
     }
 
-    public Account save(Account category) {
-        return repo.save(category);
+    public Account save(Account account) {
+        return repo.save(account);
+    }
+
+    public Account getAccount(Long id) {
+        return repo.findById(id).orElseThrow(() -> new RuntimeException(("Account not found")));
     }
 
     public void delete(Long id) {

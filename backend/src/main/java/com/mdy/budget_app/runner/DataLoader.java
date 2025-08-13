@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class DataLoader implements ApplicationRunner {
     private final CategoryRepository categoryRepository;
     private final AccountRepository accountRepository;
+
     public DataLoader(CategoryRepository categoryRepository, AccountRepository accountRepository) {
         this.categoryRepository = categoryRepository;
         this.accountRepository = accountRepository;
