@@ -15,7 +15,7 @@ const FormSelect = ({
   onChange,
 }: FormSelectProps) => {
   return (
-    <div className="flex-col items-center space-x-2 relative mb-2">
+    <div className="flex-col space-x-2 relative mb-2">
       <label className="whitespace-nowrap mb-2 w-34" htmlFor={inputId}>
         {label}
       </label>

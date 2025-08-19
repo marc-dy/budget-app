@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "./common/Button";
-import AddIncomeModal from "./AddIncomeModal";
+import IncomeModal from "./IncomeModal";
 
 const AddIncomeButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,9 +15,10 @@ const AddIncomeButton = () => {
         Add Income
       </Button>
       {isModalOpen && (
-        <AddIncomeModal
+        <IncomeModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
+          mode="add"
         />
       )}
     </>

@@ -15,7 +15,7 @@ const FormInput = ({
   onChange,
 }: FormInputProps) => {
   return (
-    <div className="flex-col items-center space-x-2">
+    <div className="flex-col space-x-2">
       <label className="whitespace-nowrap mb-2 w-30" htmlFor={inputId}>
         {label}
       </label>

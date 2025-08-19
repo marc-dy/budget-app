@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import type { IncomeData } from "../types/IncomeData";
+import type { Income } from "../types/IncomeData";
 
 export function useIncomes() {
-  const [incomes, setIncomes] = useState<IncomeData[]>([]);
+  const [incomes, setIncomes] = useState<Income[]>([]);
   useEffect(() => {
     if (import.meta.env.DEV) {
       console.log("Development mode: Income component loaded");
@@ -17,11 +17,11 @@ export function useIncomes() {
                 receivedFrom: "Client A",
                 amount: 1000,
                 account: {
-                  id: 2,
+                  id: 1,
                   name: "Bank A",
                 },
                 category: {
-                  id: 4,
+                  id: 1,
                   name: "Salary",
                 },
                 date: "2023-10-01",
@@ -32,11 +32,11 @@ export function useIncomes() {
                 receivedFrom: "Client B",
                 amount: 500,
                 account: {
-                  id: 3,
+                  id: 2,
                   name: "Bank B",
                 },
                 category: {
-                  id: 5,
+                  id: 2,
                   name: "Freelance",
                 },
                 date: "2023-10-05",
@@ -56,7 +56,7 @@ export function useIncomes() {
         if (!response.ok) {
           throw new Error("Failed to fetch income data");
         }
-        const data: IncomeData[] = await response.json();
+        const data: Income[] = await response.json();
         setIncomes(data);
       } catch {
         console.error("Error fetching income data");

@@ -17,7 +17,7 @@ describe("useAddIncomeForm", () => {
 
   it("updates input form value on handleChange", () => {
     const { result } = renderHook(() =>
-      useAddIncomeForm({ onClose: mockClose })
+      useAddIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
     );
 
     act(() => {
@@ -30,7 +30,7 @@ describe("useAddIncomeForm", () => {
 
   it("updates select form value on handleChange", () => {
     const { result } = renderHook(() =>
-      useAddIncomeForm({ onClose: mockClose })
+      useAddIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
     );
 
     act(() => {
@@ -43,20 +43,20 @@ describe("useAddIncomeForm", () => {
 
   it("updates textarea form value on handleChange", () => {
     const { result } = renderHook(() =>
-      useAddIncomeForm({ onClose: mockClose })
+      useAddIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
     );
 
     act(() => {
       result.current.handleChange({
-        target: { name: "comment", value: "This is a comment" },
+        target: { name: "comments", value: "This is a comment" },
       } as React.ChangeEvent<HTMLTextAreaElement>);
     });
-    expect(result.current.incomeFormValues.comment).toBe("This is a comment");
+    expect(result.current.incomeFormValues.comments).toBe("This is a comment");
   });
 
   it("returns errors on empty fields", async () => {
     const { result } = renderHook(() =>
-      useAddIncomeForm({ onClose: mockClose })
+      useAddIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
     );
 
     await act(async () => {
@@ -74,7 +74,7 @@ describe("useAddIncomeForm", () => {
 
   it("returns error if amount is negative", async () => {
     const { result } = renderHook(() =>
-      useAddIncomeForm({ onClose: mockClose })
+      useAddIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
     );
 
     act(() => {
@@ -122,7 +122,7 @@ describe("useAddIncomeForm", () => {
 
   it("returns error if amount is not a number", async () => {
     const { result } = renderHook(() =>
-      useAddIncomeForm({ onClose: mockClose })
+      useAddIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
     );
 
     act(() => {
@@ -170,7 +170,7 @@ describe("useAddIncomeForm", () => {
 
   it("returns error if date is invalid", async () => {
     const { result } = renderHook(() =>
-      useAddIncomeForm({ onClose: mockClose })
+      useAddIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
     );
 
     act(() => {
@@ -218,7 +218,7 @@ describe("useAddIncomeForm", () => {
 
   it("sends a post request on submit", async () => {
     const { result } = renderHook(() =>
-      useAddIncomeForm({ onClose: mockClose })
+      useAddIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
     );
 
     act(() => {
@@ -273,7 +273,7 @@ describe("useAddIncomeForm", () => {
 
   it("displays an error when post method fails", async () => {
     const { result } = renderHook(() =>
-      useAddIncomeForm({ onClose: mockClose })
+      useAddIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
     );
 
     act(() => {
