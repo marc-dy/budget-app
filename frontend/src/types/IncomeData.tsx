@@ -8,12 +8,12 @@ type Category = {
   name: string;
 };
 
-export type IncomeData = {
+export type Income = {
   id: number;
   receivedFrom: string;
   amount: number;
   account: Account;
   category: Category;
-  date: string;
+  date: string; // TODO: Check if this is correct
   comments: string;
 };

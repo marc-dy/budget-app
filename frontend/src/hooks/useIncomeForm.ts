@@ -1,14 +1,24 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import type { Income } from "../types/IncomeData";
 
-export function useAddIncomeForm({ onClose }: { onClose: () => void }) {
+export function useIncomeForm({
+  income,
+  mode,
+  onClose,
+}: {
+  income: Income | undefined;
+  mode: string;
+  onClose: () => void;
+}) {
   const [incomeFormValues, setIncomeFormValues] = useState({
-    receivedFrom: "",
-    amount: "",
-    account: "",
-    category: "",
-    date: "",
-    comment: "",
+    id: income?.id ?? 0,
+    receivedFrom: income?.receivedFrom ?? "",
+    amount: income?.amount ? String(income.amount) : "",
+    account: income?.account ? String(income.account.id) : "",
+    category: income?.category ? String(income.category.id) : "",
+    date: income?.date ?? "",
+    comments: income?.comments ?? "",
   });
   const [errors, setErrors] = useState<{
     receivedFrom?: string;
@@ -52,7 +62,7 @@ export function useAddIncomeForm({ onClose }: { onClose: () => void }) {
       accountId: Number(incomeFormValues.account),
       categoryId: Number(incomeFormValues.category),
       date: new Date(incomeFormValues.date).toISOString(),
-      comments: incomeFormValues.comment,
+      comments: incomeFormValues.comments,
     };
     if (import.meta.env.DEV) {
       console.log("Development mode: Saving income data", incomeData);
@@ -97,9 +107,53 @@ export function useAddIncomeForm({ onClose }: { onClose: () => void }) {
     }));
   };
 
+  const updateIncome = async () => {
+    if (!validate()) return;
+    const incomeData = {
+      id: incomeFormValues.id,
+      receivedFrom: incomeFormValues.receivedFrom,
+      amount: Number(incomeFormValues.amount),
+      accountId: Number(incomeFormValues.account),
+      categoryId: Number(incomeFormValues.category),
+      date: new Date(incomeFormValues.date).toISOString(),
+      comments: incomeFormValues.comments,
+    };
+    if (import.meta.env.DEV) {
+      console.log("Development mode: Edit income data", incomeData);
+      toast.success("Income updated successfully!");
+      // Mock saving in development mode
+      onClose();
+      return;
+    }
+    try {
+      const response = await fetch("/api/incomes", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(incomeData),
+      });
+      toast.success("Income updated successfully!");
+
+      if (!response.ok) {
+        throw new Error("Failed to update income");
+      }
+
+      // TODO: Optionally, you can reset the form or close the modal
+      // If checkbox is checked in modal, do not close and just clear the form.
+      onClose();
+    } catch (error) {
+      console.error("Error updating income:", error);
+      toast.error("Failed to update income. Please try again.");
+    }
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    saveIncome();
+    if (mode == "add") {
+      saveIncome();
+    } else {
+      updateIncome();
+    }
   };
 
   return {
