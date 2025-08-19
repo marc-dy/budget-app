@@ -2,7 +2,7 @@ import Button from "./common/Button";
 import FormInput from "./common/FormInput";
 import FormSelect from "./common/FormSelect";
 import type { Income } from "../types/IncomeData";
-import { useAddIncomeForm } from "../hooks/useAddIncomeForm";
+import { useIncomeForm } from "../hooks/useIncomeForm";
 import { useIncomeCategories } from "../hooks/useIncomeCategories";
 import { useIncomeAccounts } from "../hooks/useIncomeAccounts";
 
@@ -20,7 +20,7 @@ const IncomeModal = ({ isOpen, onClose, mode, income }: IncomeModalProps) => {
   const categories = useIncomeCategories();
   const accounts = useIncomeAccounts();
   const { incomeFormValues, handleChange, handleSubmit, errors } =
-    useAddIncomeForm({ income, mode, onClose });
+    useIncomeForm({ income, mode, onClose });
   const header_label = mode == "add" ? "Add Income" : "Edit Income";
   const button_label = mode == "add" ? "Save" : "Update";
 

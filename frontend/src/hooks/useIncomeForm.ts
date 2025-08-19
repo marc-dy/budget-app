@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import type { Income } from "../types/IncomeData";
 
-export function useAddIncomeForm({
+export function useIncomeForm({
   income,
   mode,
   onClose,
