@@ -79,12 +79,11 @@ export function useIncomeForm({
         },
         body: JSON.stringify(incomeData),
       });
-      toast.success("Income saved successfully!");
 
       if (!response.ok) {
         throw new Error("Failed to save income");
       }
-
+      toast.success("Income saved successfully!");
       // TODO: Optionally, you can reset the form or close the modal
       // If checkbox is checked in modal, do not close and just clear the form.
       onClose();
