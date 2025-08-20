@@ -1,4 +1,4 @@
-import { TrashIcon } from "@heroicons/react/24/outline";
+import DeleteIncomeButton from "./DeleteIncomeButton";
 import type { Income } from "../types/IncomeData";
 import EditIncomeButton from "./EditIncomeButton";
 
@@ -17,13 +17,7 @@ function populateTableData(incomes: Array<Income>) {
       <td className="px-4 py-2 border">
         <div className="flex justify-center gap-4">
           <EditIncomeButton income={income} />
-          <button
-            role="button"
-            className="flex items-center gap-1 hover:underline"
-          >
-            <TrashIcon className="h-4 w-4" />
-            Delete
-          </button>
+          <DeleteIncomeButton id={income.id} />
         </div>
       </td>
     </tr>
