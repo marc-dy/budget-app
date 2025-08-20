@@ -60,4 +60,22 @@ public class IncomeService {
         Income savedIncome = incomeRepository.save(mapper.toEntity(incomeDto));
         return mapper.toResponse(savedIncome);
     }
+
+    public IncomeResponseDto update(Long id, IncomeDto incomeDto) {
+        final Long categoryId = incomeDto.getCategoryId();
+        final Long accountId = incomeDto.getAccountId();
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new IllegalArgumentException("Invalid categoryId: " + categoryId);
+        }
+
+        if (!accountRepository.existsById((accountId))) {
+            throw new IllegalArgumentException("Invalid accountId: " + accountId);
+        }
+        Income income = incomeRepository.findById(id).orElseThrow(() -> new RuntimeException("Income ID " + id + " does " +
+                "not exists"));
+
+        mapper.updateEntityFromDto(income, incomeDto);
+        Income savedIncome = incomeRepository.save(income);
+        return mapper.toResponse(savedIncome);
+    }
 }

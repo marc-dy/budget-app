@@ -10,19 +10,27 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class IncomeMapper {
-    public Income toEntity(@NotNull IncomeDto incomeDto) {
+    private void setIncomeValues(Income income, IncomeDto incomeDto) {
         Category category = new Category();
         category.setId(incomeDto.getCategoryId());
         Account account = new Account();
         account.setId(incomeDto.getAccountId());
-        Income income = new Income();
         income.setReceivedFrom(incomeDto.getReceivedFrom());
         income.setDate(incomeDto.getDate());
         income.setAmount(incomeDto.getAmount());
         income.setCategory(category);
         income.setAccount(account);
         income.setComments(incomeDto.getComments());
+    }
+
+    public Income toEntity(@NotNull IncomeDto incomeDto) {
+        Income income = new Income();
+        setIncomeValues(income, incomeDto);
         return income;
+    }
+
+    public void updateEntityFromDto(@NotNull Income income, @NotNull IncomeDto incomeDto) {
+        setIncomeValues(income, incomeDto);
     }
 
     public IncomeResponseDto toResponse(@NotNull Income income) {

@@ -24,6 +24,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -153,5 +154,86 @@ public class IncomeServiceTest {
         assertEquals(2, incomeResponseDtoList.size());
         assertEquals(3L, incomeResponseDtoList.get(0).getId());
         assertEquals(4L, incomeResponseDtoList.get(1).getId());
+    }
+
+    @Test
+    void testUpdateIncome_CategoryDoesNotExist() {
+        LocalDate testDate = LocalDate.of(2000, 10, 10);
+        IncomeDto incomeDto = new IncomeDto("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
+                "test comment");
+        when(categoryRepository.existsById(3L)).thenReturn(false);
+        assertThrows(RuntimeException.class, () -> service.update(1L, incomeDto));
+    }
+
+    @Test
+    void testUpdateIncome_AccountDoesNotExist() {
+        LocalDate testDate = LocalDate.of(2000, 10, 10);
+        IncomeDto incomeDto = new IncomeDto("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
+                "test comment");
+        when(categoryRepository.existsById(3L)).thenReturn(true);
+        when(accountRepository.existsById(2L)).thenReturn(false);
+        assertThrows(RuntimeException.class, () -> service.update(1L, incomeDto));
+    }
+
+    @Test
+    void testUpdateIncome_IdDoesNotExist() {
+        LocalDate testDate = LocalDate.of(2000, 10, 10);
+        IncomeDto incomeDto = new IncomeDto("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
+                "test comment");
+        when(categoryRepository.existsById(3L)).thenReturn(true);
+        when(accountRepository.existsById(2L)).thenReturn(true);
+        when(incomeRepository.findById(1L)).thenReturn(Optional.empty());
+        assertThrows(RuntimeException.class, () -> service.update(1L, incomeDto));
+    }
+
+    @Test
+    void testUpdateIncome_SuccessfulUpdate() {
+        LocalDate testDate = LocalDate.of(2000, 10, 10);
+        IncomeDto incomeDto = new IncomeDto("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
+                "test comment");
+
+        Category category = new Category("Test Category 1");
+        category.setId(1L);
+
+        Category category3 = new Category("Test Category 3");
+        category3.setId(3L);
+
+        Account account2 = new Account("Test Account 2");
+        account2.setId(2L);
+
+        Account account4 = new Account("Test Account 4");
+        account4.setId(4L);
+
+        Income oldIncome = new Income("Old", BigDecimal.valueOf(1200), category, account4,
+                LocalDate.of(1990, 5, 20), "test comment old");
+        oldIncome.setId(1L);
+        Income expectedUpdateIncome = new Income("IncomeDtoTest", BigDecimal.valueOf(1), category3, account2,
+                testDate, "test comment");
+        expectedUpdateIncome.setId((1L));
+        when(categoryRepository.existsById(3L)).thenReturn(true);
+        when(accountRepository.existsById(2L)).thenReturn(true);
+        when(incomeRepository.findById(1L)).thenReturn(Optional.of(oldIncome));
+        when(incomeRepository.save(
+                        argThat(
+                                i -> i.getId() == 1L
+                                        && "IncomeDtoTest".equals(i.getReceivedFrom())
+                                        && i.getAmount().compareTo(BigDecimal.valueOf(1)) == 0
+                                        && i.getCategory().getId() == 3L
+                                        && i.getAccount().getId() == 2L
+                                        && i.getDate().equals(testDate)
+                                        && "test comment".equals(i.getComments())
+                        )
+                )
+        ).thenReturn(expectedUpdateIncome);
+        IncomeResponseDto result = service.update(1L, incomeDto);
+        assertEquals(1L, result.getId());
+        assertEquals("IncomeDtoTest", result.getReceivedFrom());
+        assertEquals(BigDecimal.valueOf(1), result.getAmount());
+        assertEquals(LocalDate.of(2000, 10, 10), result.getDate());
+        assertEquals(3L, result.getCategory().getId());
+        assertEquals("Test Category 3", result.getCategory().getName());
+        assertEquals(2L, result.getAccount().getId());
+        assertEquals("Test Account 2", result.getAccount().getName());
+        assertEquals("test comment", result.getComments());
     }
 }

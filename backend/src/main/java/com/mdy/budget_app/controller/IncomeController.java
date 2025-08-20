@@ -33,4 +33,10 @@ public class IncomeController {
     public ResponseEntity<IncomeResponseDto> createIncome(@Valid @RequestBody IncomeDto incomeDto) {
         return new ResponseEntity<>(incomeService.save(incomeDto), HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<IncomeResponseDto> updateIncome(@PathVariable Long id,
+                                                          @Valid @RequestBody IncomeDto incomeDto) {
+        return new ResponseEntity<>(incomeService.update(id, incomeDto), HttpStatus.OK);
+    }
 }

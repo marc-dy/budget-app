@@ -110,7 +110,6 @@ export function useIncomeForm({
   const updateIncome = async () => {
     if (!validate()) return;
     const incomeData = {
-      id: incomeFormValues.id,
       receivedFrom: incomeFormValues.receivedFrom,
       amount: Number(incomeFormValues.amount),
       accountId: Number(incomeFormValues.account),
@@ -126,7 +125,7 @@ export function useIncomeForm({
       return;
     }
     try {
-      const response = await fetch("/api/incomes", {
+      const response = await fetch("/api/incomes/" + incomeFormValues.id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
