@@ -76,12 +76,12 @@ const IncomeModal = ({ isOpen, onClose, mode, income }: IncomeModalProps) => {
             errorMsg={errors.date}
           />
           <div className="flex-col space-x-2">
-            <label className="whitespace-nowrap mb-2 w-34" htmlFor="comment">
+            <label className="whitespace-nowrap mb-2 w-34" htmlFor="comments">
               Comment
             </label>
             <textarea
-              id="comment"
-              name="comment"
+              id="comments"
+              name="comments"
               className="w-full mb-2 border p-2 resize-y rounded"
               value={incomeFormValues.comments}
               onChange={handleChange}

@@ -365,7 +365,6 @@ describe("useIncomeForm", () => {
       } as unknown as React.FormEvent);
     });
     const expectedIncomeData = {
-      id: 1,
       receivedFrom: "Client B",
       amount: 3000,
       accountId: 2,
@@ -379,7 +378,7 @@ describe("useIncomeForm", () => {
     expect(result.current.errors.account).not.toBeDefined();
     expect(result.current.errors.date).not.toBeDefined();
     expect(mockFetch).toHaveBeenCalledWith(
-      "/api/incomes",
+      "/api/incomes/1",
       expect.objectContaining({
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -511,7 +510,7 @@ describe("useIncomeForm", () => {
     expect(result.current.errors.account).not.toBeDefined();
     expect(result.current.errors.date).not.toBeDefined();
     expect(mockFetch).toHaveBeenCalledWith(
-      "/api/incomes",
+      "/api/incomes/1",
       expect.objectContaining({ method: "PUT" })
     );
     expect(toast.error).toHaveBeenCalledWith(expect.stringContaining("Failed"));
