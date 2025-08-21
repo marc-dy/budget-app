@@ -78,4 +78,12 @@ public class IncomeService {
         Income savedIncome = incomeRepository.save(income);
         return mapper.toResponse(savedIncome);
     }
+
+    public boolean delete(Long id) {
+        if (!incomeRepository.existsById(id)) {
+            return false;
+        }
+        incomeRepository.deleteById(id);
+        return true;
+    }
 }

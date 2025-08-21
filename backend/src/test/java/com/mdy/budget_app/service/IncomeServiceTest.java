@@ -21,11 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class IncomeServiceTest {
@@ -235,5 +234,18 @@ public class IncomeServiceTest {
         assertEquals(2L, result.getAccount().getId());
         assertEquals("Test Account 2", result.getAccount().getName());
         assertEquals("test comment", result.getComments());
+    }
+
+    @Test
+    void testDeleteIncome_IdDoesNotExists() {
+        when(incomeRepository.existsById(1L)).thenReturn(false);
+        assertFalse(service.delete(1L));
+    }
+
+    @Test
+    void testDeleteIncome_IdExistsAndDeleteSuccessfully() {
+        when(incomeRepository.existsById(1L)).thenReturn(true);
+        assertTrue(service.delete(1L));
+        verify(incomeRepository, times(1)).deleteById(eq(1L));
     }
 }
