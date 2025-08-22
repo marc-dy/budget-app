@@ -8,7 +8,7 @@ interface Account {
 export function useIncomeAccounts() {
   const [accounts, setAccounts] = useState<{ id: number; name: string }[]>([]);
   useEffect(() => {
-    /* istanbul ignore if */
+    /* istanbul ignore if -- @preserve */
     if (import.meta.env.DEV) {
       // Mocking fetch for development purposes
       window.fetch = async (url: URL | RequestInfo): Promise<Response> => {

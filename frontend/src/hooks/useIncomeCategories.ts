@@ -10,6 +10,7 @@ export function useIncomeCategories() {
     []
   );
   useEffect(() => {
+    /* istanbul ignore if -- @preserve */
     if (import.meta.env.DEV) {
       // Mocking fetch for development purposes
       window.fetch = async (url: URL | RequestInfo): Promise<Response> => {

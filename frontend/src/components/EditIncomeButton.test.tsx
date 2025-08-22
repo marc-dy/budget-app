@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { vi } from "vitest";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import EditIncomeButton from "./EditIncomeButton";
@@ -20,6 +21,15 @@ const income: Income = {
   comments: "Monthly salary",
 };
 describe("EditIncomeButton", () => {
+  beforeEach(() => {
+    vi.stubEnv("DEV", false);
+    global.fetch = vi.fn();
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.restoreAllMocks();
+  });
   it("renders button", () => {
     render(<EditIncomeButton income={income} />);
     expect(screen.getByText("Edit")).toBeInTheDocument();

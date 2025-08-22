@@ -4,6 +4,7 @@ import type { Income } from "../types/IncomeData";
 export function useIncomes() {
   const [incomes, setIncomes] = useState<Income[]>([]);
   useEffect(() => {
+    /* istanbul ignore if -- @preserve */
     if (import.meta.env.DEV) {
       console.log("Development mode: Income component loaded");
       // Mocking fetch for development purposes
