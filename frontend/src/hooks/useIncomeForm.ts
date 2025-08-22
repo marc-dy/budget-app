@@ -64,6 +64,7 @@ export function useIncomeForm({
       date: new Date(incomeFormValues.date).toISOString(),
       comments: incomeFormValues.comments,
     };
+    /* istanbul ignore if -- @preserve */
     if (import.meta.env.DEV) {
       console.log("Development mode: Saving income data", incomeData);
       toast.success("Income saved successfully!");
@@ -116,6 +117,7 @@ export function useIncomeForm({
       date: new Date(incomeFormValues.date).toISOString(),
       comments: incomeFormValues.comments,
     };
+    /* istanbul ignore if -- @preserve */
     if (import.meta.env.DEV) {
       console.log("Development mode: Edit income data", incomeData);
       toast.success("Income updated successfully!");

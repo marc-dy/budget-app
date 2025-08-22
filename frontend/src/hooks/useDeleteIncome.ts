@@ -2,6 +2,7 @@ import { toast } from "react-hot-toast";
 
 export function useDeleteIncome(id: number, onClose: () => void) {
   const deleteIncome = async () => {
+    /* istanbul ignore if -- @preserve */
     if (import.meta.env.DEV) {
       console.log("Development mode: Delete income data", id);
       toast.success("Income deleted successfully!");
