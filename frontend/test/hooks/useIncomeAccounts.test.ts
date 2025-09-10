@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { vi, type Mock } from "vitest";
-import { useIncomeAccounts } from "./useIncomeAccounts";
+import { useIncomeAccounts } from "../../src/hooks/useIncomeAccounts";
 
 describe("useIncomeAccounts", () => {
   beforeEach(() => {

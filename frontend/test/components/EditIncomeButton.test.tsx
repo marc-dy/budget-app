@@ -1,9 +1,10 @@
 import { render, screen } from "@testing-library/react";
+import { queryClientWrapper } from "../utils/QueryClientProviderWrapper";
 import { vi } from "vitest";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import EditIncomeButton from "./EditIncomeButton";
-import type { Income } from "../types/IncomeData";
+import EditIncomeButton from "../../src/components/EditIncomeButton";
+import type { Income } from "../../src/types/IncomeData";
 
 const income: Income = {
   id: 1,
@@ -37,7 +38,8 @@ describe("EditIncomeButton", () => {
 
   it("renders the edit income modal when clicked", async () => {
     const user = userEvent.setup();
-    render(<EditIncomeButton income={income} />);
+    const wrapper = queryClientWrapper();
+    render(<EditIncomeButton income={income} />, { wrapper });
     await user.click(screen.getByText("Edit"));
     expect(
       screen.getByRole("dialog", { name: /edit income/i }) // regex to match aria-labelledby and referenced by the id
@@ -46,7 +48,8 @@ describe("EditIncomeButton", () => {
 
   it("closes the modal when close is clicked", async () => {
     const user = userEvent.setup();
-    render(<EditIncomeButton income={income} />);
+    const wrapper = queryClientWrapper();
+    render(<EditIncomeButton income={income} />, { wrapper });
     await user.click(screen.getByText("Edit"));
     expect(
       screen.getByRole("dialog", { name: /edit income/i }) // regex to match aria-labelledby

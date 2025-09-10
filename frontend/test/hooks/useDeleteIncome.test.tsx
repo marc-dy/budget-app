@@ -1,7 +1,8 @@
 import { renderHook, act } from "@testing-library/react";
+import { queryClientWrapper } from "../utils/QueryClientProviderWrapper";
 import { toast } from "react-hot-toast";
 import { vi } from "vitest";
-import { useDeleteIncome } from "./useDeleteIncome";
+import { useDeleteIncome } from "../../src/hooks/useDeleteIncome";
 
 describe("useDeleteIncome", () => {
   beforeEach(() => {
@@ -19,7 +20,10 @@ describe("useDeleteIncome", () => {
       ok: true,
     });
     global.fetch = mockFetch;
-    const { result } = renderHook(() => useDeleteIncome(1, mockClose));
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(() => useDeleteIncome(1, mockClose), {
+      wrapper,
+    });
 
     await act(async () => {
       await result.current.deleteIncome();
@@ -31,7 +35,10 @@ describe("useDeleteIncome", () => {
   });
 
   it("displays an error when DELETE method fails", async () => {
-    const { result } = renderHook(() => useDeleteIncome(1, mockClose));
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(() => useDeleteIncome(1, mockClose), {
+      wrapper,
+    });
 
     const mockFetch = vi.fn().mockResolvedValueOnce({
       ok: false,

@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
+import { queryClientWrapper } from "../utils/QueryClientProviderWrapper";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import AddIncomeButton from "./AddIncomeButton";
+import AddIncomeButton from "../../src/components/AddIncomeButton";
 
 describe("AddIncomeButton", () => {
   it("renders button", () => {
@@ -11,7 +12,8 @@ describe("AddIncomeButton", () => {
 
   it("renders the add income modal when clicked", async () => {
     const user = userEvent.setup();
-    render(<AddIncomeButton />);
+    const wrapper = queryClientWrapper();
+    render(<AddIncomeButton />, { wrapper });
     await user.click(screen.getByText("Add Income"));
     expect(
       screen.getByRole("dialog", { name: /add income/i }) // regex to match aria-labelledby
@@ -20,7 +22,8 @@ describe("AddIncomeButton", () => {
 
   it("closes the modal when close is clicked", async () => {
     const user = userEvent.setup();
-    render(<AddIncomeButton />);
+    const wrapper = queryClientWrapper();
+    render(<AddIncomeButton />, { wrapper });
     await user.click(screen.getByText("Add Income"));
     expect(
       screen.getByRole("dialog", { name: /add income/i }) // regex to match aria-labelledby

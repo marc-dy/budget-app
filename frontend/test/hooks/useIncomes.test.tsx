@@ -1,6 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
+import { queryClientWrapper } from "../utils/QueryClientProviderWrapper";
 import { vi, type Mock } from "vitest";
-import { useIncomes } from "./useIncomes";
+import { useIncomes } from "../../src/hooks/useIncomes";
 
 describe("useIncomes", () => {
   beforeEach(() => {
@@ -52,11 +53,12 @@ describe("useIncomes", () => {
       status: 200,
       json: async () => mockIncome,
     });
-    const { result } = renderHook(() => useIncomes());
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(() => useIncomes(), { wrapper });
     await waitFor(() => {
-      expect(result.current.length).toEqual(2);
+      expect(result.current.data.length).toEqual(2);
     });
-    expect(result.current).toEqual(mockIncome);
+    expect(result.current.data).toEqual(mockIncome);
   });
 
   it("handles error gracefully", async () => {
@@ -66,10 +68,10 @@ describe("useIncomes", () => {
       statusText: "Not Found",
       json: async () => ({ message: "Not Found" }),
     });
-    const { result } = renderHook(() => useIncomes());
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(() => useIncomes(), { wrapper });
     await waitFor(() => {
-      expect(result.current.length).toEqual(0);
+      expect(result.current.isError).toBe(true);
     });
-    expect(result.current).toEqual([]);
   });
 });

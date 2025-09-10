@@ -26,5 +26,16 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "test/hooks/useDeleteIncome.test.tsx",
+    "test/hooks/useIncomeAccounts.test.ts",
+    "test/hooks/useIncomeForm.test.tsx",
+    "test/hooks/useIncomes.test.tsx",
+    "test/components/AddIncomeButton.test.tsx",
+    "test/components/DeleteIncomeButton.test.tsx",
+    "test/components/EditIncomeButton.test.tsx",
+    "test/components/Header.test.tsx",
+    "test/components/IncomeTable.test.tsx"
+  ]
 }

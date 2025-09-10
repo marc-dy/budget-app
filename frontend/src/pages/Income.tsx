@@ -3,7 +3,14 @@ import AddIncomeButton from "../components/AddIncomeButton";
 import { useIncomes } from "../hooks/useIncomes";
 
 export default function Income() {
-  const incomes = useIncomes();
+  const { data: incomes, isLoading, isError } = useIncomes();
+  if (isLoading) {
+    return <p>Loading</p>;
+  }
+  if (isError) {
+    return <p>Error! Failed to fetch income list!</p>;
+  }
+  //const incomes = useIncomes();
 
   return (
     <div className="p-6">

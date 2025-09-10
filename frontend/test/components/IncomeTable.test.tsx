@@ -1,11 +1,13 @@
 import { render, screen, within } from "@testing-library/react";
+import { queryClientWrapper } from "../utils/QueryClientProviderWrapper";
 import userEvent from "@testing-library/user-event";
-import IncomeTable from "./IncomeTable";
+import IncomeTable from "../../src/components/IncomeTable";
 import "@testing-library/jest-dom"; // <-- Add this import for toBeInTheDocument
 
 describe("IncomeTable", () => {
   it("renders table headers and sorts date in descending by default", () => {
-    render(<IncomeTable incomes={[]} />);
+    const wrapper = queryClientWrapper();
+    render(<IncomeTable incomes={[]} />, { wrapper });
     expect(screen.getByText("Received From")).toBeInTheDocument();
     expect(screen.getByText("Amount")).toBeInTheDocument();
     expect(screen.getByText("Account")).toBeInTheDocument();
@@ -47,8 +49,8 @@ describe("IncomeTable", () => {
         comments: "Payment for project work",
       },
     ];
-
-    render(<IncomeTable incomes={incomes} />);
+    const wrapper = queryClientWrapper();
+    render(<IncomeTable incomes={incomes} />, { wrapper });
     const rows = screen.getAllByRole("row").slice(1);
     const values = rows.map((row) =>
       within(row)
@@ -95,8 +97,8 @@ describe("IncomeTable", () => {
         comments: "commentB",
       },
     ];
-
-    render(<IncomeTable incomes={incomes} />);
+    const wrapper = queryClientWrapper();
+    render(<IncomeTable incomes={incomes} />, { wrapper });
     const user = userEvent.setup();
     await user.click(screen.getByText("Amount"));
     expect(screen.getByText("Amount ↑")).toBeInTheDocument();
@@ -161,8 +163,8 @@ describe("IncomeTable", () => {
         comments: "Zebra",
       },
     ];
-
-    render(<IncomeTable incomes={incomes} />);
+    const wrapper = queryClientWrapper();
+    render(<IncomeTable incomes={incomes} />, { wrapper });
     const user = userEvent.setup();
     await user.click(screen.getByText("Comments"));
     expect(screen.getByText("Comments ↑")).toBeInTheDocument();
@@ -222,8 +224,8 @@ describe.each([
         comments: "commentA",
       },
     ];
-
-    render(<IncomeTable incomes={incomes} />);
+    const wrapper = queryClientWrapper();
+    render(<IncomeTable incomes={incomes} />, { wrapper });
     const user = userEvent.setup();
     if (header === "Date") {
       await user.click(screen.getByText(header + " ↓"));

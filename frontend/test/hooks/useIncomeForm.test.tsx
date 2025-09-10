@@ -1,8 +1,9 @@
 import { renderHook, act } from "@testing-library/react";
+import { queryClientWrapper } from "../utils/QueryClientProviderWrapper";
 import { toast } from "react-hot-toast";
 import { vi } from "vitest";
-import { useIncomeForm } from "./useIncomeForm";
-import type { Income } from "../types/IncomeData";
+import { useIncomeForm } from "../../src/hooks/useIncomeForm";
+import type { Income } from "../../src/types/IncomeData";
 
 describe("useIncomeForm", () => {
   const mockClose = vi.fn();
@@ -17,8 +18,11 @@ describe("useIncomeForm", () => {
   });
 
   it("updates input form value on handleChange", () => {
-    const { result } = renderHook(() =>
-      useIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(
+      () =>
+        useIncomeForm({ income: undefined, mode: "add", onClose: mockClose }),
+      { wrapper }
     );
 
     act(() => {
@@ -30,8 +34,11 @@ describe("useIncomeForm", () => {
   });
 
   it("updates select form value on handleChange", () => {
-    const { result } = renderHook(() =>
-      useIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(
+      () =>
+        useIncomeForm({ income: undefined, mode: "add", onClose: mockClose }),
+      { wrapper }
     );
 
     act(() => {
@@ -43,8 +50,11 @@ describe("useIncomeForm", () => {
   });
 
   it("updates textarea form value on handleChange", () => {
-    const { result } = renderHook(() =>
-      useIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(
+      () =>
+        useIncomeForm({ income: undefined, mode: "add", onClose: mockClose }),
+      { wrapper }
     );
 
     act(() => {
@@ -56,8 +66,11 @@ describe("useIncomeForm", () => {
   });
 
   it("returns errors on empty fields", async () => {
-    const { result } = renderHook(() =>
-      useIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(
+      () =>
+        useIncomeForm({ income: undefined, mode: "add", onClose: mockClose }),
+      { wrapper }
     );
 
     await act(async () => {
@@ -89,8 +102,10 @@ describe("useIncomeForm", () => {
       date: "2023-10-01",
       comments: "Monthly salary",
     };
-    const { result } = renderHook(() =>
-      useIncomeForm({ income: income, mode: "edit", onClose: mockClose })
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(
+      () => useIncomeForm({ income: income, mode: "edit", onClose: mockClose }),
+      { wrapper }
     );
     expect(result.current.incomeFormValues.id).toBe(1);
     expect(result.current.incomeFormValues.receivedFrom).toBe("Client A");
@@ -102,8 +117,11 @@ describe("useIncomeForm", () => {
   });
 
   it("returns error if amount is negative", async () => {
-    const { result } = renderHook(() =>
-      useIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(
+      () =>
+        useIncomeForm({ income: undefined, mode: "add", onClose: mockClose }),
+      { wrapper }
     );
 
     act(() => {
@@ -150,8 +168,11 @@ describe("useIncomeForm", () => {
   });
 
   it("returns error if amount is not a number", async () => {
-    const { result } = renderHook(() =>
-      useIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(
+      () =>
+        useIncomeForm({ income: undefined, mode: "add", onClose: mockClose }),
+      { wrapper }
     );
 
     act(() => {
@@ -198,8 +219,11 @@ describe("useIncomeForm", () => {
   });
 
   it("returns error if date is invalid", async () => {
-    const { result } = renderHook(() =>
-      useIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(
+      () =>
+        useIncomeForm({ income: undefined, mode: "add", onClose: mockClose }),
+      { wrapper }
     );
 
     act(() => {
@@ -246,8 +270,11 @@ describe("useIncomeForm", () => {
   });
 
   it("sends a POST request on submit when adding income", async () => {
-    const { result } = renderHook(() =>
-      useIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(
+      () =>
+        useIncomeForm({ income: undefined, mode: "add", onClose: mockClose }),
+      { wrapper }
     );
 
     act(() => {
@@ -316,8 +343,10 @@ describe("useIncomeForm", () => {
       date: "2025-01-01",
       comments: "Monthly salary",
     };
-    const { result } = renderHook(() =>
-      useIncomeForm({ income: income, mode: "edit", onClose: mockClose })
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(
+      () => useIncomeForm({ income: income, mode: "edit", onClose: mockClose }),
+      { wrapper }
     );
 
     act(() => {
@@ -388,8 +417,11 @@ describe("useIncomeForm", () => {
   });
 
   it("displays an error when post method fails", async () => {
-    const { result } = renderHook(() =>
-      useIncomeForm({ income: undefined, mode: "add", onClose: mockClose })
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(
+      () =>
+        useIncomeForm({ income: undefined, mode: "add", onClose: mockClose }),
+      { wrapper }
     );
 
     act(() => {
@@ -460,8 +492,10 @@ describe("useIncomeForm", () => {
       date: "2025-01-01",
       comments: "Monthly salary",
     };
-    const { result } = renderHook(() =>
-      useIncomeForm({ income: income, mode: "edit", onClose: mockClose })
+    const wrapper = queryClientWrapper();
+    const { result } = renderHook(
+      () => useIncomeForm({ income: income, mode: "edit", onClose: mockClose }),
+      { wrapper }
     );
 
     act(() => {

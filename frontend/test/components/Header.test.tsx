@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import Header from "./Header";
+import Header from "../../src/components/Header";
 import "@testing-library/jest-dom"; // <-- Add this import for toBeInTheDocument
 
 describe("Header", () => {
