@@ -1,24 +1,12 @@
 import { render, screen, within } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { queryClientWrapper } from "../utils/QueryClientProviderWrapper";
 import userEvent from "@testing-library/user-event";
-import IncomeTable from "./IncomeTable";
+import IncomeTable from "../../src/components/IncomeTable";
 import "@testing-library/jest-dom"; // <-- Add this import for toBeInTheDocument
-
-// TODO: Move QueryClient to a common utility file and maybe revert back to a TS file.
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      // turns retries off
-      retry: false,
-    },
-  },
-});
-const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-);
 
 describe("IncomeTable", () => {
   it("renders table headers and sorts date in descending by default", () => {
+    const wrapper = queryClientWrapper();
     render(<IncomeTable incomes={[]} />, { wrapper });
     expect(screen.getByText("Received From")).toBeInTheDocument();
     expect(screen.getByText("Amount")).toBeInTheDocument();
@@ -61,7 +49,7 @@ describe("IncomeTable", () => {
         comments: "Payment for project work",
       },
     ];
-
+    const wrapper = queryClientWrapper();
     render(<IncomeTable incomes={incomes} />, { wrapper });
     const rows = screen.getAllByRole("row").slice(1);
     const values = rows.map((row) =>
@@ -109,7 +97,7 @@ describe("IncomeTable", () => {
         comments: "commentB",
       },
     ];
-
+    const wrapper = queryClientWrapper();
     render(<IncomeTable incomes={incomes} />, { wrapper });
     const user = userEvent.setup();
     await user.click(screen.getByText("Amount"));
@@ -175,7 +163,7 @@ describe("IncomeTable", () => {
         comments: "Zebra",
       },
     ];
-
+    const wrapper = queryClientWrapper();
     render(<IncomeTable incomes={incomes} />, { wrapper });
     const user = userEvent.setup();
     await user.click(screen.getByText("Comments"));
@@ -236,7 +224,7 @@ describe.each([
         comments: "commentA",
       },
     ];
-
+    const wrapper = queryClientWrapper();
     render(<IncomeTable incomes={incomes} />, { wrapper });
     const user = userEvent.setup();
     if (header === "Date") {

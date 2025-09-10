@@ -1,23 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { queryClientWrapper } from "../utils/QueryClientProviderWrapper";
 import { vi } from "vitest";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import EditIncomeButton from "./EditIncomeButton";
-import type { Income } from "../types/IncomeData";
-
-// TODO: Move QueryClient to a common utility file and maybe revert back to a TS file.
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      // turns retries off
-      retry: false,
-    },
-  },
-});
-const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-);
+import EditIncomeButton from "../../src/components/EditIncomeButton";
+import type { Income } from "../../src/types/IncomeData";
 
 const income: Income = {
   id: 1,
@@ -51,6 +38,7 @@ describe("EditIncomeButton", () => {
 
   it("renders the edit income modal when clicked", async () => {
     const user = userEvent.setup();
+    const wrapper = queryClientWrapper();
     render(<EditIncomeButton income={income} />, { wrapper });
     await user.click(screen.getByText("Edit"));
     expect(
@@ -60,6 +48,7 @@ describe("EditIncomeButton", () => {
 
   it("closes the modal when close is clicked", async () => {
     const user = userEvent.setup();
+    const wrapper = queryClientWrapper();
     render(<EditIncomeButton income={income} />, { wrapper });
     await user.click(screen.getByText("Edit"));
     expect(

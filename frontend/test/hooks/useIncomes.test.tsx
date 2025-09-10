@@ -1,19 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { queryClientWrapper } from "../utils/QueryClientProviderWrapper";
 import { vi, type Mock } from "vitest";
-import { useIncomes } from "./useIncomes";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      // turns retries off
-      retry: false,
-    },
-  },
-});
-const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-);
+import { useIncomes } from "../../src/hooks/useIncomes";
 
 describe("useIncomes", () => {
   beforeEach(() => {
@@ -65,6 +53,7 @@ describe("useIncomes", () => {
       status: 200,
       json: async () => mockIncome,
     });
+    const wrapper = queryClientWrapper();
     const { result } = renderHook(() => useIncomes(), { wrapper });
     await waitFor(() => {
       expect(result.current.data.length).toEqual(2);
@@ -79,6 +68,7 @@ describe("useIncomes", () => {
       statusText: "Not Found",
       json: async () => ({ message: "Not Found" }),
     });
+    const wrapper = queryClientWrapper();
     const { result } = renderHook(() => useIncomes(), { wrapper });
     await waitFor(() => {
       expect(result.current.isError).toBe(true);

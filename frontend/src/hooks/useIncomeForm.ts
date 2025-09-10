@@ -113,7 +113,6 @@ export function useIncomeForm({
       }
     },
     onSuccess: () => {
-      console.log("sumaccess");
       queryClient.invalidateQueries({ queryKey: ["incomes"] });
     },
   });
