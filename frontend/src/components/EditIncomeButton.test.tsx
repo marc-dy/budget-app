@@ -1,9 +1,23 @@
 import { render, screen } from "@testing-library/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { vi } from "vitest";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import EditIncomeButton from "./EditIncomeButton";
 import type { Income } from "../types/IncomeData";
+
+// TODO: Move QueryClient to a common utility file and maybe revert back to a TS file.
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // turns retries off
+      retry: false,
+    },
+  },
+});
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+);
 
 const income: Income = {
   id: 1,
@@ -37,7 +51,7 @@ describe("EditIncomeButton", () => {
 
   it("renders the edit income modal when clicked", async () => {
     const user = userEvent.setup();
-    render(<EditIncomeButton income={income} />);
+    render(<EditIncomeButton income={income} />, { wrapper });
     await user.click(screen.getByText("Edit"));
     expect(
       screen.getByRole("dialog", { name: /edit income/i }) // regex to match aria-labelledby and referenced by the id
@@ -46,7 +60,7 @@ describe("EditIncomeButton", () => {
 
   it("closes the modal when close is clicked", async () => {
     const user = userEvent.setup();
-    render(<EditIncomeButton income={income} />);
+    render(<EditIncomeButton income={income} />, { wrapper });
     await user.click(screen.getByText("Edit"));
     expect(
       screen.getByRole("dialog", { name: /edit income/i }) // regex to match aria-labelledby

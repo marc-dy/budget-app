@@ -1,7 +1,21 @@
 import { renderHook, act } from "@testing-library/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { vi } from "vitest";
 import { useDeleteIncome } from "./useDeleteIncome";
+
+// TODO: Move QueryClient to a common utility file and maybe revert back to a TS file.
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // turns retries off
+      retry: false,
+    },
+  },
+});
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+);
 
 describe("useDeleteIncome", () => {
   beforeEach(() => {
@@ -19,7 +33,9 @@ describe("useDeleteIncome", () => {
       ok: true,
     });
     global.fetch = mockFetch;
-    const { result } = renderHook(() => useDeleteIncome(1, mockClose));
+    const { result } = renderHook(() => useDeleteIncome(1, mockClose), {
+      wrapper,
+    });
 
     await act(async () => {
       await result.current.deleteIncome();
@@ -31,7 +47,9 @@ describe("useDeleteIncome", () => {
   });
 
   it("displays an error when DELETE method fails", async () => {
-    const { result } = renderHook(() => useDeleteIncome(1, mockClose));
+    const { result } = renderHook(() => useDeleteIncome(1, mockClose), {
+      wrapper,
+    });
 
     const mockFetch = vi.fn().mockResolvedValueOnce({
       ok: false,

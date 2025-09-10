@@ -1,28 +1,38 @@
 import { toast } from "react-hot-toast";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 export function useDeleteIncome(id: number, onClose: () => void) {
-  const deleteIncome = async () => {
-    /* istanbul ignore if -- @preserve */
-    if (import.meta.env.DEV) {
-      console.log("Development mode: Delete income data", id);
-      toast.success("Income deleted successfully!");
-      onClose();
-      return;
-    }
-    try {
-      const response = await fetch("/api/incomes/" + id, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to delete income");
+  const queryClient = useQueryClient();
+  const deleteIncomeMutation = useMutation({
+    mutationFn: async (id: number) => {
+      /* istanbul ignore if -- @preserve */
+      if (import.meta.env.DEV) {
+        console.log("Development mode: Delete income data", id);
+        toast.success("Income deleted successfully!");
+        onClose();
+        return;
       }
-      toast.success("Income deleted successfully!");
-      onClose();
-    } catch (error) {
-      console.error("Error deleting income:", error);
-      toast.error("Failed to delete income.");
-    }
+      try {
+        const response = await fetch("/api/incomes/" + id, {
+          method: "DELETE",
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to delete income");
+        }
+        toast.success("Income deleted successfully!");
+        onClose();
+      } catch (error) {
+        console.error("Error deleting income:", error);
+        toast.error("Failed to delete income.");
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["incomes"] });
+    },
+  });
+  const deleteIncome = async () => {
+    deleteIncomeMutation.mutate(id);
   };
   return { deleteIncome };
 }

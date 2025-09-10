@@ -1,6 +1,19 @@
 import { renderHook, waitFor } from "@testing-library/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { vi, type Mock } from "vitest";
 import { useIncomes } from "./useIncomes";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // turns retries off
+      retry: false,
+    },
+  },
+});
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+);
 
 describe("useIncomes", () => {
   beforeEach(() => {
@@ -52,11 +65,11 @@ describe("useIncomes", () => {
       status: 200,
       json: async () => mockIncome,
     });
-    const { result } = renderHook(() => useIncomes());
+    const { result } = renderHook(() => useIncomes(), { wrapper });
     await waitFor(() => {
-      expect(result.current.length).toEqual(2);
+      expect(result.current.data.length).toEqual(2);
     });
-    expect(result.current).toEqual(mockIncome);
+    expect(result.current.data).toEqual(mockIncome);
   });
 
   it("handles error gracefully", async () => {
@@ -66,10 +79,9 @@ describe("useIncomes", () => {
       statusText: "Not Found",
       json: async () => ({ message: "Not Found" }),
     });
-    const { result } = renderHook(() => useIncomes());
+    const { result } = renderHook(() => useIncomes(), { wrapper });
     await waitFor(() => {
-      expect(result.current.length).toEqual(0);
+      expect(result.current.isError).toBe(true);
     });
-    expect(result.current).toEqual([]);
   });
 });
