@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { useState } from "react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import FormSelect from "./FormSelect";
+import FormSelect from "../../../src/components/common/FormSelect";
 
 describe("FormSelect", () => {
   it("renders select with initial value", () => {
