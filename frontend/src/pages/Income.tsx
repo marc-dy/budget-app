@@ -10,7 +10,6 @@ export default function Income() {
   if (isError) {
     return <p>Error! Failed to fetch income list!</p>;
   }
-  //const incomes = useIncomes();
 
   return (
     <div className="p-6">
