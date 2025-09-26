@@ -18,10 +18,10 @@ export default function Header() {
         className="mx-auto flex w-full items-center justify-between p-6 lg:px-8"
       >
         <div className="flex lg:flex-1 max-w-7xl mx-auto">
-          <a href="/" className="-m-1.5 p-1.5">
+          <Link to="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             Placeholder Logo
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button

@@ -17,7 +17,11 @@ export default defineConfig({
     coverage: {
       provider: "istanbul",
       reporter: ["text", "json", "html"],
-      include: ["src/components/**/*.{ts,tsx}", "src/hooks/**/*.{ts,tsx}"],
+      include: [
+        "src/components/**/*.{ts,tsx}",
+        "src/hooks/**/*.{ts,tsx}",
+        "src/contexts/**/*.{ts,tsx}",
+      ],
       exclude: ["src/components/**/*.test.tsx", "src/hooks/**/*.test.tsx"],
     },
   },
