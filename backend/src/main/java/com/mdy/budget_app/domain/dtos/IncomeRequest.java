@@ -1,4 +1,4 @@
-package com.mdy.budget_app.dto;
+package com.mdy.budget_app.domain.dtos;
 
 import jakarta.validation.constraints.*;
 import lombok.Value;
@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Value
-public class IncomeDto {
+public class IncomeRequest {
     @NotBlank(message = "Received From is required")
     @Size(max = 100, message = "Received from cannot exceed 200 characters")
     String receivedFrom;

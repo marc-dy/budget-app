@@ -1,6 +1,6 @@
 package com.mdy.budget_app.controller;
 
-import com.mdy.budget_app.entity.Category;
+import com.mdy.budget_app.domain.entities.Category;
 import com.mdy.budget_app.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

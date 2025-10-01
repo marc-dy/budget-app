@@ -1,6 +1,6 @@
 package com.mdy.budget_app.service;
 
-import com.mdy.budget_app.entity.Category;
+import com.mdy.budget_app.domain.entities.Category;
 import com.mdy.budget_app.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

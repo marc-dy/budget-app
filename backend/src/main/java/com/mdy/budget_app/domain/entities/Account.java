@@ -1,4 +1,4 @@
-package com.mdy.budget_app.entity;
+package com.mdy.budget_app.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Category {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,9 +17,8 @@ public class Category {
     @Column(unique = true)
     private String name;
 
-    public Category(String name) {
+    public Account(String name) {
         this.name = name;
     }
     // Getters and setters
-
 }

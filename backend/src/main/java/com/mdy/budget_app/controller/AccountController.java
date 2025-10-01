@@ -1,6 +1,6 @@
 package com.mdy.budget_app.controller;
 
-import com.mdy.budget_app.entity.Account;
+import com.mdy.budget_app.domain.entities.Account;
 import com.mdy.budget_app.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

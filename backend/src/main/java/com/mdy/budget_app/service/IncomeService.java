@@ -1,8 +1,8 @@
 package com.mdy.budget_app.service;
 
-import com.mdy.budget_app.dto.IncomeDto;
-import com.mdy.budget_app.dto.IncomeResponseDto;
-import com.mdy.budget_app.entity.Income;
+import com.mdy.budget_app.domain.dtos.IncomeRequest;
+import com.mdy.budget_app.domain.dtos.IncomeResponse;
+import com.mdy.budget_app.domain.entities.Income;
 import com.mdy.budget_app.mapper.IncomeMapper;
 import com.mdy.budget_app.repository.AccountRepository;
 import com.mdy.budget_app.repository.CategoryRepository;
@@ -29,26 +29,26 @@ public class IncomeService {
         this.mapper = mapper;
     }
 
-    public List<IncomeResponseDto> getAll() {
-        return incomeRepository.findAll().stream().map(income -> new IncomeResponseDto(
+    public List<IncomeResponse> getAll() {
+        return incomeRepository.findAll().stream().map(income -> new IncomeResponse(
                 income.getId(),
                 income.getReceivedFrom(),
                 income.getAmount(),
-                new IncomeResponseDto.CategoryDto(income.getCategory().getId(), income.getCategory().getName()),
-                new IncomeResponseDto.AccountDto(income.getAccount().getId(), income.getAccount().getName()),
+                new IncomeResponse.CategoryDto(income.getCategory().getId(), income.getCategory().getName()),
+                new IncomeResponse.AccountDto(income.getAccount().getId(), income.getAccount().getName()),
                 income.getDate(),
                 income.getComments()
         )).toList();
     }
 
-    public IncomeResponseDto getIncome(Long id) {
+    public IncomeResponse getIncome(Long id) {
         Income income = incomeRepository.findById(id).orElseThrow(() -> new RuntimeException(("Income ID not found")));
         return mapper.toResponse(income);
     }
 
-    public IncomeResponseDto save(IncomeDto incomeDto) {
-        final Long categoryId = incomeDto.getCategoryId();
-        final Long accountId = incomeDto.getAccountId();
+    public IncomeResponse save(IncomeRequest incomeRequest) {
+        final Long categoryId = incomeRequest.getCategoryId();
+        final Long accountId = incomeRequest.getAccountId();
 
         if (!categoryRepository.existsById(categoryId)) {
             throw new IllegalArgumentException("Invalid categoryId: " + categoryId);
@@ -57,13 +57,13 @@ public class IncomeService {
         if (!accountRepository.existsById((accountId))) {
             throw new IllegalArgumentException("Invalid accountId: " + accountId);
         }
-        Income savedIncome = incomeRepository.save(mapper.toEntity(incomeDto));
+        Income savedIncome = incomeRepository.save(mapper.toEntity(incomeRequest));
         return mapper.toResponse(savedIncome);
     }
 
-    public IncomeResponseDto update(Long id, IncomeDto incomeDto) {
-        final Long categoryId = incomeDto.getCategoryId();
-        final Long accountId = incomeDto.getAccountId();
+    public IncomeResponse update(Long id, IncomeRequest incomeRequest) {
+        final Long categoryId = incomeRequest.getCategoryId();
+        final Long accountId = incomeRequest.getAccountId();
         if (!categoryRepository.existsById(categoryId)) {
             throw new IllegalArgumentException("Invalid categoryId: " + categoryId);
         }
@@ -74,7 +74,7 @@ public class IncomeService {
         Income income = incomeRepository.findById(id).orElseThrow(() -> new RuntimeException("Income ID " + id + " does " +
                 "not exists"));
 
-        mapper.updateEntityFromDto(income, incomeDto);
+        mapper.updateEntityFromDto(income, incomeRequest);
         Income savedIncome = incomeRepository.save(income);
         return mapper.toResponse(savedIncome);
     }

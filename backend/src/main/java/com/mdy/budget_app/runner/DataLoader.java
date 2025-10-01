@@ -1,7 +1,7 @@
 package com.mdy.budget_app.runner;
 
-import com.mdy.budget_app.entity.Account;
-import com.mdy.budget_app.entity.Category;
+import com.mdy.budget_app.domain.entities.Account;
+import com.mdy.budget_app.domain.entities.Category;
 import com.mdy.budget_app.repository.AccountRepository;
 import com.mdy.budget_app.repository.CategoryRepository;
 import org.springframework.boot.ApplicationArguments;
