@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { vi } from "vitest";
 import "@testing-library/jest-dom";
-import FormInput from "./FormInput";
+import FormInput from "../../../src/components/common/FormInput";
 
 describe.each([
   { inputType: "text", value: "Sample Value" },

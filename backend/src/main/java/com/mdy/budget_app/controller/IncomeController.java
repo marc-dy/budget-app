@@ -1,7 +1,7 @@
 package com.mdy.budget_app.controller;
 
-import com.mdy.budget_app.dto.IncomeDto;
-import com.mdy.budget_app.dto.IncomeResponseDto;
+import com.mdy.budget_app.domain.dtos.IncomeRequest;
+import com.mdy.budget_app.domain.dtos.IncomeResponse;
 import com.mdy.budget_app.service.IncomeService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -20,24 +20,24 @@ public class IncomeController {
     }
 
     @GetMapping
-    public List<IncomeResponseDto> getAllIncomes() {
+    public List<IncomeResponse> getAllIncomes() {
         return incomeService.getAll();
     }
 
     @GetMapping("/{id}")
-    public IncomeResponseDto getIncomeById(@PathVariable Long id) {
+    public IncomeResponse getIncomeById(@PathVariable Long id) {
         return incomeService.getIncome(id);
     }
 
     @PostMapping
-    public ResponseEntity<IncomeResponseDto> createIncome(@Valid @RequestBody IncomeDto incomeDto) {
-        return new ResponseEntity<>(incomeService.save(incomeDto), HttpStatus.CREATED);
+    public ResponseEntity<IncomeResponse> createIncome(@Valid @RequestBody IncomeRequest incomeRequest) {
+        return new ResponseEntity<>(incomeService.save(incomeRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<IncomeResponseDto> updateIncome(@PathVariable Long id,
-                                                          @Valid @RequestBody IncomeDto incomeDto) {
-        return new ResponseEntity<>(incomeService.update(id, incomeDto), HttpStatus.OK);
+    public ResponseEntity<IncomeResponse> updateIncome(@PathVariable Long id,
+                                                       @Valid @RequestBody IncomeRequest incomeRequest) {
+        return new ResponseEntity<>(incomeService.update(id, incomeRequest), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

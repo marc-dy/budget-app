@@ -28,6 +28,7 @@
   },
   "include": [
     "src",
+    "test/contexts/AuthProvider.test.tsx",
     "test/hooks/useDeleteIncome.test.tsx",
     "test/hooks/useIncomeAccounts.test.ts",
     "test/hooks/useIncomeForm.test.tsx",
@@ -36,6 +37,10 @@
     "test/components/DeleteIncomeButton.test.tsx",
     "test/components/EditIncomeButton.test.tsx",
     "test/components/Header.test.tsx",
-    "test/components/IncomeTable.test.tsx"
+    "test/components/IncomeTable.test.tsx",
+    "test/components/common/Button.test.tsx",
+    "test/components/common/DeleteModal.test.tsx",
+    "test/components/common/FormInput.test.tsx",
+    "test/components/common/FormSelect.test.tsx"
   ]
 }

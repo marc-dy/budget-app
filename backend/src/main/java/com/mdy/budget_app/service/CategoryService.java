@@ -1,6 +1,6 @@
 package com.mdy.budget_app.service;
 
-import com.mdy.budget_app.entity.Category;
+import com.mdy.budget_app.domain.entities.Category;
 import com.mdy.budget_app.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

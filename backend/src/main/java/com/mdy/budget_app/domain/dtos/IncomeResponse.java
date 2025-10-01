@@ -1,4 +1,4 @@
-package com.mdy.budget_app.dto;
+package com.mdy.budget_app.domain.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
-public class IncomeResponseDto {
+public class IncomeResponse {
     private Long id;
     private String receivedFrom;
     private BigDecimal amount;

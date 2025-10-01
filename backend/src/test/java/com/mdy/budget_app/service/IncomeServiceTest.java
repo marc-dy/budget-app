@@ -1,10 +1,10 @@
 package com.mdy.budget_app.service;
 
-import com.mdy.budget_app.dto.IncomeDto;
-import com.mdy.budget_app.dto.IncomeResponseDto;
-import com.mdy.budget_app.entity.Account;
-import com.mdy.budget_app.entity.Category;
-import com.mdy.budget_app.entity.Income;
+import com.mdy.budget_app.domain.dtos.IncomeRequest;
+import com.mdy.budget_app.domain.dtos.IncomeResponse;
+import com.mdy.budget_app.domain.entities.Account;
+import com.mdy.budget_app.domain.entities.Category;
+import com.mdy.budget_app.domain.entities.Income;
 import com.mdy.budget_app.mapper.IncomeMapper;
 import com.mdy.budget_app.repository.AccountRepository;
 import com.mdy.budget_app.repository.CategoryRepository;
@@ -54,7 +54,7 @@ public class IncomeServiceTest {
                 LocalDate.of(1990, 5, 20), "test comment");
         income.setId(3L);
         when(incomeRepository.findById(3L)).thenReturn(Optional.of(income));
-        IncomeResponseDto result = service.getIncome(3L);
+        IncomeResponse result = service.getIncome(3L);
         assertEquals(3L, result.getId());
         assertEquals("Person", result.getReceivedFrom());
         assertEquals(BigDecimal.valueOf(1200), result.getAmount());
@@ -74,25 +74,25 @@ public class IncomeServiceTest {
 
     @Test
     void testSaveIncome_throwErrorWhenCategoryDoesNotExist() {
-        IncomeDto incomeDto = new IncomeDto("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, LocalDate.of(2000, 1, 1),
+        IncomeRequest incomeRequest = new IncomeRequest("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, LocalDate.of(2000, 1, 1),
                 "test comment");
         when(categoryRepository.existsById(3L)).thenReturn(false);
-        assertThrows(IllegalArgumentException.class, () -> service.save(incomeDto));
+        assertThrows(IllegalArgumentException.class, () -> service.save(incomeRequest));
     }
 
     @Test
     void testSaveIncome_throwErrorWhenAccountDoesNotExist() {
-        IncomeDto incomeDto = new IncomeDto("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, LocalDate.of(2000, 1, 1),
+        IncomeRequest incomeRequest = new IncomeRequest("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, LocalDate.of(2000, 1, 1),
                 "test comment");
         when(categoryRepository.existsById(3L)).thenReturn(true);
         when(accountRepository.existsById(2L)).thenReturn(false);
-        assertThrows(IllegalArgumentException.class, () -> service.save(incomeDto));
+        assertThrows(IllegalArgumentException.class, () -> service.save(incomeRequest));
     }
 
     @Test
     void testSaveIncome_saveAndReturnResponseDto() {
         LocalDate testDate = LocalDate.of(2000, 10, 10);
-        IncomeDto incomeDto = new IncomeDto("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
+        IncomeRequest incomeRequest = new IncomeRequest("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
                 "test comment");
         when(categoryRepository.existsById(3L)).thenReturn(true);
         when(accountRepository.existsById(2L)).thenReturn(true);
@@ -107,7 +107,7 @@ public class IncomeServiceTest {
         savedIncome.setId(1L);
         when(incomeRepository.save(any(Income.class))).thenReturn(savedIncome);
 
-        IncomeResponseDto result = service.save(incomeDto);
+        IncomeResponse result = service.save(incomeRequest);
         assertEquals(1L, result.getId());
         assertEquals("IncomeDtoTest", result.getReceivedFrom());
         assertEquals(BigDecimal.valueOf(1), result.getAmount());
@@ -123,8 +123,8 @@ public class IncomeServiceTest {
     void testGetAllIncome_EmptyList() {
         List<Income> incomeList = new ArrayList<>();
         when(incomeRepository.findAll()).thenReturn(incomeList);
-        List<IncomeResponseDto> incomeResponseDtoList = service.getAll();
-        assertEquals(0, incomeResponseDtoList.size());
+        List<IncomeResponse> incomeResponseList = service.getAll();
+        assertEquals(0, incomeResponseList.size());
     }
 
     @Test
@@ -148,47 +148,47 @@ public class IncomeServiceTest {
         incomeList.add(income2);
 
         when(incomeRepository.findAll()).thenReturn(incomeList);
-        List<IncomeResponseDto> incomeResponseDtoList = service.getAll();
+        List<IncomeResponse> incomeResponseList = service.getAll();
 
-        assertEquals(2, incomeResponseDtoList.size());
-        assertEquals(3L, incomeResponseDtoList.get(0).getId());
-        assertEquals(4L, incomeResponseDtoList.get(1).getId());
+        assertEquals(2, incomeResponseList.size());
+        assertEquals(3L, incomeResponseList.get(0).getId());
+        assertEquals(4L, incomeResponseList.get(1).getId());
     }
 
     @Test
     void testUpdateIncome_CategoryDoesNotExist() {
         LocalDate testDate = LocalDate.of(2000, 10, 10);
-        IncomeDto incomeDto = new IncomeDto("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
+        IncomeRequest incomeRequest = new IncomeRequest("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
                 "test comment");
         when(categoryRepository.existsById(3L)).thenReturn(false);
-        assertThrows(RuntimeException.class, () -> service.update(1L, incomeDto));
+        assertThrows(RuntimeException.class, () -> service.update(1L, incomeRequest));
     }
 
     @Test
     void testUpdateIncome_AccountDoesNotExist() {
         LocalDate testDate = LocalDate.of(2000, 10, 10);
-        IncomeDto incomeDto = new IncomeDto("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
+        IncomeRequest incomeRequest = new IncomeRequest("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
                 "test comment");
         when(categoryRepository.existsById(3L)).thenReturn(true);
         when(accountRepository.existsById(2L)).thenReturn(false);
-        assertThrows(RuntimeException.class, () -> service.update(1L, incomeDto));
+        assertThrows(RuntimeException.class, () -> service.update(1L, incomeRequest));
     }
 
     @Test
     void testUpdateIncome_IdDoesNotExist() {
         LocalDate testDate = LocalDate.of(2000, 10, 10);
-        IncomeDto incomeDto = new IncomeDto("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
+        IncomeRequest incomeRequest = new IncomeRequest("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
                 "test comment");
         when(categoryRepository.existsById(3L)).thenReturn(true);
         when(accountRepository.existsById(2L)).thenReturn(true);
         when(incomeRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThrows(RuntimeException.class, () -> service.update(1L, incomeDto));
+        assertThrows(RuntimeException.class, () -> service.update(1L, incomeRequest));
     }
 
     @Test
     void testUpdateIncome_SuccessfulUpdate() {
         LocalDate testDate = LocalDate.of(2000, 10, 10);
-        IncomeDto incomeDto = new IncomeDto("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
+        IncomeRequest incomeRequest = new IncomeRequest("IncomeDtoTest", BigDecimal.valueOf(1), 3L, 2L, testDate,
                 "test comment");
 
         Category category = new Category("Test Category 1");
@@ -224,7 +224,7 @@ public class IncomeServiceTest {
                         )
                 )
         ).thenReturn(expectedUpdateIncome);
-        IncomeResponseDto result = service.update(1L, incomeDto);
+        IncomeResponse result = service.update(1L, incomeRequest);
         assertEquals(1L, result.getId());
         assertEquals("IncomeDtoTest", result.getReceivedFrom());
         assertEquals(BigDecimal.valueOf(1), result.getAmount());

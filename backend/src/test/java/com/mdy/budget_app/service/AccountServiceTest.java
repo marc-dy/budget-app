@@ -1,6 +1,6 @@
 package com.mdy.budget_app.service;
 
-import com.mdy.budget_app.entity.Account;
+import com.mdy.budget_app.domain.entities.Account;
 import com.mdy.budget_app.repository.AccountRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
