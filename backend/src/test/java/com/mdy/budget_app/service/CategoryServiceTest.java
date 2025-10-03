@@ -42,7 +42,6 @@ public class CategoryServiceTest {
 
     @Test
     void testGetAll_nonEmpty() {
-
         Category Category1 = new Category("Cash");
         Category1.setId(1L);
         Category Category2 = new Category("BDO");

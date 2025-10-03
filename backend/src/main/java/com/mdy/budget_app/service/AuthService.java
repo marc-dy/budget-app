@@ -49,7 +49,6 @@ public class AuthService {
                 .expiration(new Date(System.currentTimeMillis() + jwtExpiryMs))
                 .signWith(getSigningKey())
                 .compact();
-
     }
 
     public UserDetails validateToken(String token) {

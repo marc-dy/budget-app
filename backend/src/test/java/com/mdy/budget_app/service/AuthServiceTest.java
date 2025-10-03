@@ -55,12 +55,11 @@ public class AuthServiceTest {
 
     @Test
     void test_validateToken_GetsTheValidUserDetails() {
-        String jwtToken = "eyJhbGciOiJIUzI1NiJ9" +
-                ".eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTc1OTMwNjgwOCwiZXhwIjoxNzU5MzkzMjA4fQ.Ohqo6M_bcW-kF3qwCs1sXsDha4BHNUU_x8smpxNBqiM";
         User user = new User();
         user.setId(1L);
         user.setUsername("testuser");
         BudgetAppUserDetails budgetAppUserDetails = new BudgetAppUserDetails(user);
+        String jwtToken = authService.generateToken(budgetAppUserDetails);
         when(userDetailsService.loadUserByUsername("testuser")).thenReturn(budgetAppUserDetails);
         UserDetails userDetails = authService.validateToken(jwtToken);
         assertEquals("testuser", userDetails.getUsername());
