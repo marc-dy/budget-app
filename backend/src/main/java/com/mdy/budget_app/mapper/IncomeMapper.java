@@ -5,42 +5,38 @@ import com.mdy.budget_app.domain.dtos.IncomeResponse;
 import com.mdy.budget_app.domain.entities.Account;
 import com.mdy.budget_app.domain.entities.Category;
 import com.mdy.budget_app.domain.entities.Income;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
+import org.mapstruct.*;
 
-@Component
-public class IncomeMapper {
-    private void setIncomeValues(Income income, IncomeRequest incomeRequest) {
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface IncomeMapper {
+    @Mapping(source = "categoryId", target = "category")
+    @Mapping(source = "accountId", target = "account")
+    Income toEntity(IncomeRequest incomeRequest);
+
+    @InheritConfiguration
+    void updateIncomeFromDto(IncomeRequest incomeRequest, @MappingTarget Income income);
+
+    IncomeResponse toDto(Income income);
+
+    IncomeResponse.CategoryDto categoryToCategoryDto(Category category);
+
+    IncomeResponse.AccountDto accountToAccountDto(Account account);
+
+    default Category categoryIdToCategory(Long categoryId) {
+        if (categoryId == null) {
+            return null;
+        }
         Category category = new Category();
-        category.setId(incomeRequest.getCategoryId());
+        category.setId(categoryId);
+        return category;
+    }
+
+    default Account accouuntIdToAccount(Long accountId) {
+        if (accountId == null) {
+            return null;
+        }
         Account account = new Account();
-        account.setId(incomeRequest.getAccountId());
-        income.setReceivedFrom(incomeRequest.getReceivedFrom());
-        income.setDate(incomeRequest.getDate());
-        income.setAmount(incomeRequest.getAmount());
-        income.setCategory(category);
-        income.setAccount(account);
-        income.setComments(incomeRequest.getComments());
-    }
-
-    public Income toEntity(@NotNull IncomeRequest incomeRequest) {
-        Income income = new Income();
-        setIncomeValues(income, incomeRequest);
-        return income;
-    }
-
-    public void updateEntityFromDto(@NotNull Income income, @NotNull IncomeRequest incomeRequest) {
-        setIncomeValues(income, incomeRequest);
-    }
-
-    public IncomeResponse toResponse(@NotNull Income income) {
-        return new IncomeResponse(
-                income.getId(),
-                income.getReceivedFrom(),
-                income.getAmount(),
-                new IncomeResponse.CategoryDto(income.getCategory().getId(), income.getCategory().getName()),
-                new IncomeResponse.AccountDto(income.getAccount().getId(), income.getAccount().getName()),
-                income.getDate(),
-                income.getComments());
+        account.setId(accountId);
+        return account;
     }
 }

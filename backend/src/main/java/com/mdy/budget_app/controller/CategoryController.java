@@ -11,21 +11,21 @@ import java.util.List;
 @RequestMapping("/api/categories")
 public class CategoryController {
     @Autowired
-    private CategoryService service;
+    private CategoryService categoryService;
 
     @GetMapping
     public List<Category> getAllCategories() {
-        return service.getAll();
+        return categoryService.getAll();
     }
 
     @PostMapping
     public Category createCategory(@RequestBody Category category) {
-        return service.save(category);
+        return categoryService.save(category);
     }
 
     @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable Long id) {
-        service.delete(id);
+        categoryService.delete(id);
     }
 
 }

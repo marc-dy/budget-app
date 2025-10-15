@@ -1,12 +1,18 @@
 package com.mdy.budget_app.domain.dtos;
 
 import jakarta.validation.constraints.*;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class IncomeRequest {
     @NotBlank(message = "Received From is required")
     @Size(max = 100, message = "Received from cannot exceed 200 characters")

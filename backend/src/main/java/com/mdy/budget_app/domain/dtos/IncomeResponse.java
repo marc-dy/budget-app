@@ -2,14 +2,17 @@ package com.mdy.budget_app.domain.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@AllArgsConstructor
+
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class IncomeResponse {
     private Long id;
     private String receivedFrom;
@@ -21,6 +24,7 @@ public class IncomeResponse {
 
     @Getter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class CategoryDto {
         private Long id;
         private String name;
@@ -28,6 +32,7 @@ public class IncomeResponse {
 
     @Getter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class AccountDto {
         private Long id;
         private String name;

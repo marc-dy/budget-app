@@ -11,21 +11,21 @@ import java.util.List;
 @RequestMapping("/api/accounts")
 public class AccountController {
     @Autowired
-    private AccountService service;
+    private AccountService accountService;
 
     @GetMapping
     public List<Account> getAllAccounts() {
-        return service.getAll();
+        return accountService.getAll();
     }
 
     @PostMapping
     public Account createCategory(@RequestBody Account account) {
-        return service.save(account);
+        return accountService.save(account);
     }
 
     @DeleteMapping("/{id}")
     public void deleteAccount(@PathVariable Long id) {
-        service.delete(id);
+        accountService.delete(id);
     }
 
 }
