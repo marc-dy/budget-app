@@ -1,6 +1,5 @@
 package com.mdy.budget_app.service;
 
-import com.mdy.budget_app.domain.dtos.IncomeResponse;
 import com.mdy.budget_app.domain.entities.Income;
 import com.mdy.budget_app.repository.AccountRepository;
 import com.mdy.budget_app.repository.CategoryRepository;
@@ -24,16 +23,8 @@ public class IncomeService {
         this.accountRepository = accountRepository;
     }
 
-    public List<IncomeResponse> getAll() {
-        return incomeRepository.findAll().stream().map(income -> new IncomeResponse(
-                income.getId(),
-                income.getReceivedFrom(),
-                income.getAmount(),
-                new IncomeResponse.CategoryDto(income.getCategory().getId(), income.getCategory().getName()),
-                new IncomeResponse.AccountDto(income.getAccount().getId(), income.getAccount().getName()),
-                income.getDate(),
-                income.getComments()
-        )).toList();
+    public List<Income> getAll() {
+        return incomeRepository.findAll();
     }
 
     public Income getIncome(Long id) {

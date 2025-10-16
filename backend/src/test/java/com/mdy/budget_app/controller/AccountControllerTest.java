@@ -66,7 +66,5 @@ public class AccountControllerTest {
                 .andExpect(jsonPath("$[0].name").value("BPI"))
                 .andExpect(jsonPath("$[1].id").value(2))
                 .andExpect(jsonPath("$[1].name").value("BDO"));
-
-
     }
 }

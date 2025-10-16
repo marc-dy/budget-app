@@ -18,9 +18,31 @@ public interface IncomeMapper {
 
     IncomeResponse toDto(Income income);
 
-    IncomeResponse.CategoryDto categoryToCategoryDto(Category category);
+    /*
+     * TODO: Currently there is no standalone categoryDto class so there is not existing mapper
+     *  Once it's created, remove this and just refer to that one using @Mapper(uses = {CategoryMapper.class}
+     */
+    default IncomeResponse.CategoryDto categoryToCategoryDto(Category category) {
+        if (category == null) {
+            return null;
+        }
 
-    IncomeResponse.AccountDto accountToAccountDto(Account account);
+        IncomeResponse.CategoryDto categoryDto = new IncomeResponse.CategoryDto();
+        categoryDto.setId(category.getId());
+        categoryDto.setName(category.getName());
+        return categoryDto;
+    }
+
+    default IncomeResponse.AccountDto accountToAccountDto(Account account) {
+        if (account == null) {
+            return null;
+        }
+
+        IncomeResponse.AccountDto accountDto = new IncomeResponse.AccountDto();
+        accountDto.setId(account.getId());
+        accountDto.setName(account.getName());
+        return accountDto;
+    }
 
     default Category categoryIdToCategory(Long categoryId) {
         if (categoryId == null) {

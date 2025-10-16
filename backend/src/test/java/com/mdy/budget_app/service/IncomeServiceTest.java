@@ -1,12 +1,12 @@
 package com.mdy.budget_app.service;
 
-import com.mdy.budget_app.domain.dtos.IncomeResponse;
 import com.mdy.budget_app.domain.entities.Account;
 import com.mdy.budget_app.domain.entities.Category;
 import com.mdy.budget_app.domain.entities.Income;
 import com.mdy.budget_app.repository.AccountRepository;
 import com.mdy.budget_app.repository.CategoryRepository;
 import com.mdy.budget_app.repository.IncomeRepository;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +32,24 @@ public class IncomeServiceTest {
     @Mock
     private IncomeRepository incomeRepository;
     private IncomeService incomeService;
+
+    private static @NotNull List<Income> getIncomes(Category category) {
+        Account account = new Account("Test Account");
+        account.setId(2L);
+
+        Income income1 = new Income("A", BigDecimal.valueOf(1200), category, account,
+                LocalDate.of(1990, 5, 20), "test comment");
+        income1.setId(3L);
+
+        Income income2 = new Income("B", BigDecimal.valueOf(1300), category, account,
+                LocalDate.of(2000, 1, 1), "test comment2");
+        income2.setId(4L);
+
+        List<Income> incomeList = new ArrayList<>();
+        incomeList.add(income1);
+        incomeList.add(income2);
+        return incomeList;
+    }
 
     @BeforeEach
     void setUp() {
@@ -126,7 +144,7 @@ public class IncomeServiceTest {
     void testGetAllIncome_EmptyList() {
         List<Income> incomeList = new ArrayList<>();
         when(incomeRepository.findAll()).thenReturn(incomeList);
-        List<IncomeResponse> incomeResponseList = incomeService.getAll();
+        List<Income> incomeResponseList = incomeService.getAll();
         assertEquals(0, incomeResponseList.size());
     }
 
@@ -135,23 +153,10 @@ public class IncomeServiceTest {
         Category category = new Category("Test Category");
         category.setId(1L);
 
-        Account account = new Account("Test Account");
-        account.setId(2L);
-
-        Income income1 = new Income("A", BigDecimal.valueOf(1200), category, account,
-                LocalDate.of(1990, 5, 20), "test comment");
-        income1.setId(3L);
-
-        Income income2 = new Income("B", BigDecimal.valueOf(1300), category, account,
-                LocalDate.of(2000, 1, 1), "test comment2");
-        income2.setId(4L);
-
-        List<Income> incomeList = new ArrayList<>();
-        incomeList.add(income1);
-        incomeList.add(income2);
+        List<Income> incomeList = getIncomes(category);
 
         when(incomeRepository.findAll()).thenReturn(incomeList);
-        List<IncomeResponse> incomeResponseList = incomeService.getAll();
+        List<Income> incomeResponseList = incomeService.getAll();
 
         assertEquals(2, incomeResponseList.size());
         assertEquals(3L, incomeResponseList.get(0).getId());

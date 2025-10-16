@@ -22,7 +22,8 @@ public class IncomeController {
 
     @GetMapping
     public List<IncomeResponse> getAllIncomes() {
-        return incomeService.getAll();
+        List<Income> incomeList = incomeService.getAll();
+        return incomeList.stream().map(incomeMapper::toDto).toList();
     }
 
     @GetMapping("/{id}")
