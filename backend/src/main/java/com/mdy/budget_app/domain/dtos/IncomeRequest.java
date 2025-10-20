@@ -14,25 +14,25 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class IncomeRequest {
-    @NotBlank(message = "Received From is required")
-    @Size(max = 100, message = "Received from cannot exceed 200 characters")
+    @NotBlank
+    @Size(max = 100)
     String receivedFrom;
 
-    @NotNull(message = "Amount is required")
-    @Min(value = 0, message = "Amount must be greater than or equal to 0.")
+    @NotNull
+    @PositiveOrZero
     BigDecimal amount;
 
-    @NotNull(message = "Category is required")
-    @Positive(message = "Category ID must be a positive number")
+    @NotNull
+    @Positive
     Long categoryId;
 
-    @NotNull(message = "Account is required")
-    @Positive(message = "Account ID must be a positive number")
+    @NotNull
+    @Positive
     Long accountId;
 
     @NotNull
     LocalDate date;
 
-    @Size(max = 500, message = "Comment cannot exceed 500 characters")
+    @Size(max = 300)
     String comments;
 }

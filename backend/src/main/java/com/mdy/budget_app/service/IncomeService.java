@@ -1,6 +1,7 @@
 package com.mdy.budget_app.service;
 
 import com.mdy.budget_app.domain.entities.Income;
+import com.mdy.budget_app.exceptions.IncomeNotFoundException;
 import com.mdy.budget_app.repository.AccountRepository;
 import com.mdy.budget_app.repository.CategoryRepository;
 import com.mdy.budget_app.repository.IncomeRepository;
@@ -28,7 +29,7 @@ public class IncomeService {
     }
 
     public Income getIncome(Long id) {
-        return incomeRepository.findById(id).orElseThrow(() -> new RuntimeException(("Income ID not found")));
+        return incomeRepository.findById(id).orElseThrow(() -> new IncomeNotFoundException(("Income ID not found")));
     }
 
     public Income save(Income income) {
