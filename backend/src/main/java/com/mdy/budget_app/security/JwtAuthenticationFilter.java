@@ -28,7 +28,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );
-                System.out.println("[MDY] Sucdcesfully generated username pass auth token");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
                 if (userDetails instanceof BudgetAppUserDetails) {

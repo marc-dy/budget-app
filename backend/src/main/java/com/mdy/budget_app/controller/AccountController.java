@@ -19,7 +19,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public Account createCategory(@RequestBody Account account) {
+    public Account createAccount(@RequestBody Account account) {
         return accountService.save(account);
     }
 
