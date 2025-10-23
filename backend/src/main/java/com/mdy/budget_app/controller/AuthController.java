@@ -29,7 +29,6 @@ public class AuthController {
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         UserDetails userDetails = authService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
         String accessToken = authService.generateToken(userDetails);
-        log.info(accessToken);
         User loggedInUser = userService.getUser(loginRequest.getUsername());
         LoginResponse authResponse = LoginResponse.builder()
                 .user(userMapper.toDto(loggedInUser))
